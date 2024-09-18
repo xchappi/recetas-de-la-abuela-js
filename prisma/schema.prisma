@@ -10,54 +10,18 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model User {
-  id              String       @id @default(cuid())
-  name            String?
-  email           String?      @unique
-  password        String
-  createdAt       DateTime     @default(now()) @map(name: "created_at")
-  updatedAt       DateTime     @updatedAt @map(name: "updated_at")
-  weeklyMenus     WeeklyMenu[]
-  favoriteRecipes Recipe[]     @relation("FavoriteRecipes")
-  Recipe          Recipe[]
-
-  @@map(name: "users")
-}
 
 model Recipe {
-  id           String      @id @default(cuid())
+  id           Int      @id @default(autoincrement())
   title        String
-  description  String?
+  description  String
   ingredients  String[]
-  steps        String[]
-  createdAt    DateTime    @default(now()) @map(name: "created_at")
-  updatedAt    DateTime    @updatedAt @map(name: "updated_at")
-  author       User        @relation(fields: [authorId], references: [id])
-  authorId     String
-  category     Category    @relation(fields: [categoryId], references: [id])
-  categoryId   String
-  favoritedBy  User[]      @relation("FavoriteRecipes")
-  WeeklyMenu   WeeklyMenu? @relation(fields: [weeklyMenuId], references: [id])
-  weeklyMenuId String?
+  instructions String[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
 
   @@map(name: "recipes")
 }
 
-model Category {
-  id      String   @id @default(cuid())
-  name    String
-  recipes Recipe[]
 
-  @@map(name: "categories")
-}
-
-model WeeklyMenu {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  recipes   Recipe[]
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @updatedAt @map(name: "updated_at")
-
-  @@map(name: "weekly_menus")
-}
