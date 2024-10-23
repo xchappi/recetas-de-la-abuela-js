@@ -36,7 +36,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
-# Recetario de la Abuela
+# Recetas de la Abuela
 
 Aplicación web de recetas familiares construida con Next.js y PostgreSQL.
 
